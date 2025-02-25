@@ -30,9 +30,15 @@ if (!file_exists($matched)) {
 }
 
 global $whitelist;
-$mime = array_search($ext, $whitelist);
+$mime = false;
+foreach ($whitelist as $type => $extensions) {
+    if (in_array($ext, $extensions, true)) {
+        $mime = $type;
+        break;
+    }
+}
 
-if ($mime !== FALSE) {
+if ($mime !== false) {
     if ($ext === 'swf') {
         echo '<script src="https://unpkg.com/@ruffle-rs/ruffle"></script>';
         echo '<div style="width: 100%; height: 100%;">';

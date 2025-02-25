@@ -1,5 +1,5 @@
 <?php
-// Not currently hooked up.
+// used for recent uploads history in the client
 // This is the delete file function.
 
 include 'includes/config/Database.conf.php';
@@ -20,7 +20,7 @@ if (!$DB->isFileOwner($_POST["i"], $_POST["k"])) {
 $name = $DB->getFileNameByID($_POST["i"]);
 $DB->deleteFileByID($_POST["i"]);
 
-$matched = glob($uploadDirectory."/". $name.".*");
+$matched = glob($uploadDirectory . "/" . $name . ".*");
 
 if (empty($matched)) {
     return;
