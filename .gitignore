@@ -1,0 +1,4 @@
+/.idea
+includes/config/Database.conf.php
+.htaccess
+php_errors.log

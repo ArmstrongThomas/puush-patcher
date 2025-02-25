@@ -1,0 +1,29 @@
+<?php
+$domain = "example.com";
+$uploadDirectory = "ups"; // Directory where the images are saved
+$fileMaxSize = 200 * 1024 * 1024;
+$whitelist = array(
+    'image/jpeg' => 'jpeg',
+    'image/jpeg' => 'jpg',
+    'image/png' => 'png',
+    'image/psd' => 'psd',
+    'image/bmp' => 'bmp',
+    'image/gif' => 'gif',
+    'image/vnd.wap.wbmp' => 'bmp',
+    'audio/mpeg' => 'mp3',
+	'application/x-rar-compressed' => 'rar',
+    'application/x-rar' => 'rar',
+    'application/x-zip-compressed' => 'zip',
+    'application/zip' => 'zip',
+    'application/x-7z-compressed' => '7z',
+    'text/plain' => 'txt',
+    'text/html' => 'html',
+    'text/html' => 'htm',
+    'text/css' => 'css',
+    'text/plain' => 'js',
+    'font/otf' => 'otf',
+    'font/ttf' => 'ttf',
+    'font/woff' => 'woff',
+    'font/woff2' => 'woff2',
+    'image/svg+xml' => 'svg'
+);

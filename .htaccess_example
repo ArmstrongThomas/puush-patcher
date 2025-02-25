@@ -1,0 +1,52 @@
+Options +FollowSymLinks
+RewriteEngine On
+
+##########################################
+# Redirect to https
+##########################################
+RewriteCond %{HTTP_HOST} example\.com$ [NC]
+RewriteRule ^/(.*)$ https://example.com/$1 [R=301,L]
+
+#########################
+# API Endpoints
+#########################
+
+# Upload API
+RewriteCond %{HTTP_HOST} example\.com$ [NC]
+RewriteRule ^api/up/?$ upload.php [NC,L]
+
+# Authentication API
+RewriteCond %{HTTP_HOST} example\.com$ [NC]
+RewriteRule ^api/auth/?$ auth.php [NC,L]
+
+# Login (go) API
+RewriteCond %{HTTP_HOST} example\.com$ [NC]
+RewriteRule ^login/go/?$ auth.php [NC,L]
+
+# History API
+RewriteCond %{HTTP_HOST} example\.com$ [NC]
+RewriteRule ^api/hist/?$ history.php [NC,L]
+
+# Delete API
+RewriteCond %{HTTP_HOST} example\.com$ [NC]
+RewriteRule ^api/del/?$ delete.php [NC,L]
+
+# Version info (download) API
+RewriteCond %{HTTP_HOST} example\.com$ [NC]
+RewriteRule ^dl/puush-win\.txt/?$ version.txt [NC,L]
+
+# Registration Page
+RewriteCond %{HTTP_HOST} example\.com$ [NC]
+RewriteRule ^register/?$ register.php [NC,L]
+
+
+#########################
+# Image viewing rules
+#########################
+RewriteCond %{HTTP_HOST} example\.com$ [NC]
+RewriteRule ^([a-zA-Z0-9]+)$ view.php?image=$1 [NC,L]
+
+RewriteCond %{HTTP_HOST} example\.com$ [NC]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !\.(php)$
+RewriteRule ^([a-zA-Z0-9]+)\.([a-zA-Z0-9]+)$ view.php?image=$1 [NC,L]
