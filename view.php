@@ -7,47 +7,47 @@ include 'includes/config/Global.conf.php';
 
 $DB = new Database($dbhost, $dbport, $dbuser, $dbpass, $dbname);
 
-
-if (!isset($_GET['image']))
-{
-    exit ('ERR No image provided.');
+if (!isset($_GET['image'])) {
+    exit('ERR No image provided.');
 }
-
 
 $image = basename(urldecode($_GET['image']));
 
-
-$matched = glob($uploadDirectory."/". $image.".*");
-
-if (empty($matched))
-{
-    exit ('ERR No image found.');
+// Retrieve the file information from the database
+$fileInfo = $DB->getFileInfo($image);
+if (!$fileInfo) {
+    exit('ERR No file info found.');
 }
 
+// Extract the original file name and determine the extension
+$originalName = $fileInfo['orginalname'];
+$ext = strtolower(Puush::getExtension($originalName));
 
-$matched = $matched[0];
+$matched = $uploadDirectory . "/" . $image . "." . $ext;
 
-// Get the extension
-$ext = strtolower(Puush::getExtension($matched));
+if (!file_exists($matched)) {
+    exit('ERR No image found.');
+}
 
 global $whitelist;
-// Look for an appropriate mime type
 $mime = array_search($ext, $whitelist);
 
-// Did we find one?
-if ($mime !== FALSE)
-{
-    header('Content-type: ' . $mime);
-    //header('Expires: 0');
-    header('Expires: '.gmdate('D, d M Y H:i:s \G\M\T', time() + (60 * 60* 24))); // 1 day :D
-    //header('Cache-Control: must-revalidate');
-    header('Cache-Control: public, max-age=86400');
+if ($mime !== FALSE) {
+    if ($ext === 'swf') {
+        echo '<script src="https://unpkg.com/@ruffle-rs/ruffle"></script>';
+        echo '<div style="width: 100%; height: 100%;">';
+        echo '<embed src="' . $matched . '" width="100%" height="100%" />';
+        echo '</div>';
+    } else {
+        header('Content-type: ' . $mime);
+        header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', time() + (60 * 60 * 24))); // 1 day
+        header('Cache-Control: public, max-age=86400');
 
-    // Prepare to send the image
-    ob_clean();
-    flush();
+        ob_clean();
+        flush();
 
-    // Send the image
-    readfile($matched);
+        readfile($matched);
+    }
     $DB->updateViewCount($_GET['image']);
 }
+?>

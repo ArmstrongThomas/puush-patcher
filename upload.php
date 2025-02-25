@@ -21,7 +21,7 @@ if ($file['size'] > $fileMaxSize) {
     return;
 }
 
-if (Puush::validateFile($file) == false) {
+if (!Puush::validateFile($file)) {
     return;
 }
 

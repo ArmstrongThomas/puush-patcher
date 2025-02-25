@@ -35,7 +35,6 @@ class Puush
         $mimeType = finfo_file($finfo, $file["tmp_name"], FILEINFO_MIME_TYPE);
         finfo_close($finfo);
 
-
         if (!array_key_exists($mimeType, $whitelist)) {
             return false;
         }

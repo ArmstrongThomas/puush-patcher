@@ -185,4 +185,12 @@ class Database
 
         return $this->db->prepare($query);
     }
+
+    public function getFileInfo($image) {
+        $stmt = $this->db->prepare("SELECT * FROM files WHERE name = ?");
+        $stmt->bindParam(1, $image);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
 }
